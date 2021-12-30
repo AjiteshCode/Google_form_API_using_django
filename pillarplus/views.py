@@ -8,7 +8,7 @@ import json , io
 #importing rest framework views
 from rest_framework.decorators import api_view , permission_classes
 from rest_framework.permissions import AllowAny 
-from rest_framework.generics import CreateAPIView , RetrieveAPIView , RetrieveDestroyAPIView
+from rest_framework.generics import CreateAPIView , RetrieveAPIView , RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
 #importing serializers
@@ -63,7 +63,7 @@ class CreateEntry(CreateAPIView):
     permission_classes = [AllowAny,]
 
 #reading form entry specific
-class ReadForm(RetrieveDestroyAPIView):
+class ReadForm(RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.FormSerailizer
     permission_classes = [AllowAny,]
     queryset = models.GoogleForm.objects.all()

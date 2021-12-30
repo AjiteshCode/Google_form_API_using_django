@@ -1,0 +1,4 @@
+api/loadfile - loading the csv and form name (POST)
+api/createentry/ - provide details to create a new entry related to this form (POST)
+api/form_entry/id - fetching a specific entry with id (GET , DELETE , Update) (id- form entry id)
+api/readformentries/id - reading all entries of a form (id - form id) (GET)
