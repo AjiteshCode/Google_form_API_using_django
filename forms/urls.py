@@ -21,6 +21,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/loadfile',views.LoadFile.as_view(),name='csv_file_loading'),
+    path('api/createentry/',views.CreateEntry.as_view(),name='create_form_entry'),
+    path('api/form_entry/<int:pk>',views.ReadForm.as_view()),
+    path('api/readformentries/<int:pk>',views.ReadAllEntries.as_view(),name='form_entries'),
 
 ] 
 

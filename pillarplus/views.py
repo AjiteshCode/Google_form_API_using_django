@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 
 #imprting functional modules
@@ -7,7 +8,7 @@ import json , io
 #importing rest framework views
 from rest_framework.decorators import api_view , permission_classes
 from rest_framework.permissions import AllowAny 
-from rest_framework.generics import CreateAPIView , RetrieveAPIView , DestroyAPIView
+from rest_framework.generics import CreateAPIView , RetrieveAPIView , RetrieveDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
 #importing serializers
@@ -57,25 +58,22 @@ class LoadFile(CreateAPIView):
 """ 
     CRUD Views for Form Template
 """
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def create_form_entry(request,pk):
-    request.data['form_name']=pk
-    serializer = serializers.FormSerializer(data=data)
-    if serializer.is_valid(raise_exception=True):
-        return Response(serializer.data,status=status.HTTP_201_CREATED)
+class CreateEntry(CreateAPIView):
+    serializer_class = serializers.FormSerailizer
+    permission_classes = [AllowAny,]
 
 #reading form entry specific
-class ReadForm(RetrieveAPIView):
-    serializer_class = serializers.FormSerailizer()
+class ReadForm(RetrieveDestroyAPIView):
+    serializer_class = serializers.FormSerailizer
     permission_classes = [AllowAny,]
-    
+    queryset = models.GoogleForm.objects.all()
+      
 #
 
-#deleting form entry with primary key
-class DeleteFormEntry(DestroyAPIView):
-    serializer_class = serializers.FormNameSerializer()
+#
+
+#Retrieving form entries related to a form_name
+class ReadAllEntries(RetrieveAPIView):
+    serializer_class = serializers.FormNameSerializer
     permission_classes = [AllowAny,]
-
-
-        
+    queryset  = models.FormName.objects.all()
